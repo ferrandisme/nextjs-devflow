@@ -1,9 +1,8 @@
-import _import from "eslint-plugin-import";
-import { fixupPluginRules } from "@eslint/compat";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
+
 import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,10 +12,7 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
-export default [
-  {
-    ignores: ["components/ui/**/*"],
-  },
+const eslintConfig = [
   ...compat.extends(
     "next/core-web-vitals",
     "next/typescript",
@@ -25,11 +21,9 @@ export default [
     "prettier"
   ),
   {
-    plugins: {
-      import: fixupPluginRules(_import),
-    },
-
     rules: {
+      "no-undef": "off",
+      camelcase: ["error", { allow: ["Geist_Mono"] }],
       "import/order": [
         "error",
         {
@@ -60,20 +54,8 @@ export default [
           },
         },
       ],
-
-      camelcase: [
-        "error",
-        {
-          allow: ["aa_bb"],
-        },
-      ],
-    },
-  },
-  {
-    files: ["**/*.ts", "**/*.tsx"],
-
-    rules: {
-      "no-undef": "off",
     },
   },
 ];
+
+export default eslintConfig;
