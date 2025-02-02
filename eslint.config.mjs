@@ -12,7 +12,10 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
-const eslintConfig = [
+const config = [
+  {
+    ignores: ["components/ui/**/*"],
+  },
   ...compat.extends(
     "next/core-web-vitals",
     "next/typescript",
@@ -22,7 +25,6 @@ const eslintConfig = [
   ),
   {
     rules: {
-      "no-undef": "off",
       camelcase: ["error", { allow: ["Geist_Mono"] }],
       "import/order": [
         "error",
@@ -54,8 +56,16 @@ const eslintConfig = [
           },
         },
       ],
+      "comma-dangle": "off",
+    },
+  },
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+
+    rules: {
+      "no-undef": "off",
     },
   },
 ];
 
-export default eslintConfig;
+export default config;
